@@ -49,8 +49,8 @@ func (c Code) String() string {
 	}
 }
 
-// Response is a GitHub API response.  This wraps the standard http.Response
-// returned from GitHub and provides convenient access to future things like
+// Response is a ClawIO API response.  This wraps the standard http.Response
+// returned from ClawIO and provides convenient access to future things like
 // pagination links.
 type Response struct {
 	*http.Response
@@ -86,7 +86,7 @@ type Err struct {
 }
 
 // NewErr is a usefull function to create Errs with the corresponding Code message.
-// If no message is passed, the detault code message will be used.
+// If no message is passed, the default code message will be used.
 func NewErr(c Code, msg string) *Err {
 	if msg == "" {
 		msg = c.String()
