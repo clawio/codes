@@ -27,14 +27,17 @@ const (
 	// BadInputData is returned when the input parameters are not valid.
 	BadInputData
 
-	// Internal is returned when there is an unexpected/undesired problem
+	// Internal is returned when there is an unexpected/undesired problem.
 	Internal
 
-	// NotFound is returned when something cannot be found
+	// NotFound is returned when something cannot be found.
 	NotFound
 
-	// BadChecksum is returned when two checksum differs
+	// BadChecksum is returned when two checksum differs.
 	BadChecksum
+
+	// TooBig is returned when something is too big to be processed.
+	TooBig
 )
 
 // String returns a string representation of the Code
@@ -54,6 +57,8 @@ func (c Code) String() string {
 		return "not found"
 	case BadChecksum:
 		return "checksums differ"
+	case TooBig:
+		return "too big"
 	default:
 		return "FIXME: this should be a helpful message"
 	}
