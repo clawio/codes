@@ -29,21 +29,31 @@ const (
 
 	// Internal is returned when there is an unexpected/undesired problem
 	Internal
+
+	// NotFound is returned when something cannot be found
+	NotFound
+
+	// BadChecksum is returned when two checksum differs
+	BadChecksum
 )
 
 // String returns a string representation of the Code
 func (c Code) String() string {
 	switch c {
 	case InvalidToken:
-		return "Invalid or expired token"
+		return "invalid or expired token"
 	case Unauthenticated:
-		return "Unauthenticated request"
+		return "unauthenticated request"
 	case BadAuthenticationData:
-		return "Bad authentication data"
+		return "bad authentication data"
 	case BadInputData:
-		return "Bad input data"
+		return "bad input data"
 	case Internal:
-		return "Internal error. Please submit a query to the support team"
+		return "internal error. Please submit a query to the support team"
+	case NotFound:
+		return "not found"
+	case BadChecksum:
+		return "checksums differ"
 	default:
 		return "FIXME: this should be a helpful message"
 	}
