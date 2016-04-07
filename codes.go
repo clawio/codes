@@ -12,7 +12,7 @@ type Code uint32
 const (
 	// To add new coded always add them in the end, to not break iota
 
-	// Sucess indicates no error.
+	// Success indicates no error.
 	Success Code = iota
 
 	// InvalidToken is returned when the auth token is invalid or has expired
@@ -83,6 +83,7 @@ type ErrorResponse struct {
 	*Err     `json:"error"` // more detail on individual errors
 }
 
+// NewErrorResponse wraps a Response with an error.
 func NewErrorResponse(res *http.Response, e *Err) *ErrorResponse {
 	response := &ErrorResponse{Response: res, Err: e}
 	return response
