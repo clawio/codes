@@ -71,6 +71,13 @@ type Response struct {
 	*http.Response
 }
 
+func (r *Response) String() string {
+	return fmt.Sprintf("%v %v: %d",
+		r.Response.Request.Method, sanitizeURL(r.Response.Request.URL),
+		r.Response.StatusCode)
+
+}
+
 // NewResponse creates a new Response for the provided http.Response.
 func NewResponse(r *http.Response) *Response {
 	response := &Response{Response: r}
@@ -90,9 +97,9 @@ func NewErrorResponse(res *http.Response, e *Err) *ErrorResponse {
 }
 
 func (r *ErrorResponse) Error() string {
-	return fmt.Sprintf("%v %v: %d %v",
+	return fmt.Sprintf("%v %v: %d %d:%s",
 		r.Response.Request.Method, sanitizeURL(r.Response.Request.URL),
-		r.Response.StatusCode, r.Error)
+		r.Response.StatusCode, r.Err.Code, r.Err.Message)
 }
 
 // An Err reports more details on an individual error in an ErrorResponse.
