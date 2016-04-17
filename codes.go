@@ -97,15 +97,20 @@ func NewErrorResponse(res *http.Response, e *Err) *ErrorResponse {
 }
 
 func (r *ErrorResponse) Error() string {
-	return fmt.Sprintf("%v %v: %d %d:%s",
+	return fmt.Sprintf("%v %v: %d (%s)",
 		r.Response.Request.Method, sanitizeURL(r.Response.Request.URL),
-		r.Response.StatusCode, r.Err.Code, r.Err.Message)
+		r.Response.StatusCode, r.Err.Error())
 }
 
 // An Err reports more details on an individual error in an ErrorResponse.
 type Err struct {
 	Message string `json:"message"`
 	Code    Code   `json:"code"`
+}
+
+// Error() implements the Error interface.
+func (e *Err) Error() string {
+	return fmt.Sprintf("%d: %s", e.Code, e.Message)
 }
 
 // NewErr is a usefull function to create Errs with the corresponding Code message.
@@ -115,11 +120,6 @@ func NewErr(c Code, msg string) *Err {
 		msg = c.String()
 	}
 	return &Err{msg, c}
-}
-
-// Error() implements the Error interface.
-func (e *Err) Error() string {
-	return fmt.Sprintf("%d: %s", e.Code, e.Code.String())
 }
 
 // sanitizeURL redacts the token parameter from the URL which may be
